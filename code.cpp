@@ -1,4 +1,3 @@
-
 #include<bits/stdc++.h>
 using namespace std;
 #define endl '\n'
@@ -12,20 +11,39 @@ map<ll,ll>m;
 
 
 vector<ll>v;
-vector<ll>::iterator it;
+
 int main()
 {
     ios::sync_with_stdio(0);
     cin.tie(0);
     cout.tie(0);
-    v.pb(30);
-    v.pb(31);
-    v.pb(304);
-    v.pb(3004);
-    v.pb(3334);
-    it=v.begin()+2;
-    cout<<*it<<endl;
+    ll t,i,n,ans,j,a,b,c,p=1,sum;
+    cin>>t;
+    while(t--)
+    {
+        cin>>n;
+        v.clear();
+        ans=0;
+        for(i=0; i<n; i++)
+        {
+            cin>>a;
+            v.pb(a);
+        }
+        sort(v.begin(),v.end());
+        for(i=0; i<n-2; i++)
+        {
+            for(j=i+1; j<n-1; j++)
+            {
+                a=v[i];
+                b=v[j];
+                sum=a+b;
+                c=lower_bound(v.begin()+j+1,v.end(),sum)-v.begin();
+                ans+=c-j-1;
+            }
+        }
+        cout<<"Case "<<p<<": "<<ans<<endl;
+        p++;
 
-
+    }
 return 0;
 }
