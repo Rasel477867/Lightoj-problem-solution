@@ -5,65 +5,71 @@ using namespace std;
 #define pb push_back
 #define ps push
 #define pp pop
-
 vector<ll>v;
-vector<ll>:: iterator it;
-
-ll zero(ll n)
+ll n,k;
+bool cheak(ll m)
 {
-    ll i,c=0,pw=5;
-    while(n>=pw)
+    ll sum=0,i,c=0;
+    for(i=0; i<n; i++)
     {
-       c+=n/pw;
-       pw=pw*5;
-    }
-    return  c;
-}
-ll bsearch(ll q)
-{
-    ll l=0,r=1e9,mid;
-    while(l<=r)
-    {
-        mid=(l+r)/2;
-        if(zero(mid)>q)
-            r=mid-1;
-        else if(zero(mid)<q)
-            l=mid+1;
-        else
-            return mid;
-    }
-    return -1;
-}
 
+        if(v[i]>m)
+            return false;
+        if(sum+v[i]<=m)
+        {
+            sum+=v[i];
+            if(i==n-1)
+                c++;
+        }
+        else{
+            c++;
+            sum=v[i];
+            if(i==n-1)
+                c++;
+        }
 
+    }
+    if(c<=k)
+        return true;
+    else
+        return false;
+}
 
 int main()
 {
     ios::sync_with_stdio(0);
     cin.tie(0);
     cout.tie(0);
-    ll t,n,c=1,a,i;
+    ll t,i,a,ans,mid,r,l,sum,p=1;
     cin>>t;
     while(t--)
     {
-        cin>>n;
-        if(bsearch(n)==-1)
-            cout<<"Case "<<c<<": impossible"<<endl;
-        else
+        cin>>n>>k;
+        v.clear();
+        sum=0;
+        for(i=0; i<n; i++)
         {
-            a=bsearch(n);
-            for(i=a; i>=1; i--)
-            {
-                if(zero(i)!=n)
-                    break;
-            }
-            cout<<"Case "<<c<<": "<<i+1<<endl;
-
+            cin>>a;
+            v.pb(a);
+            sum+=a;
         }
-        c++;
+        l=1,r=sum;
+        while(r>=l)
+        {
+            mid=(l+r)/2;
 
+            if(cheak(mid))
+            {
+                ans=mid;
+                r=mid-1;
+
+            }
+            else
+                l=mid+1;
+        }
+        cout<<"Case "<<p<<": "<<ans<<endl;
+        p++;
     }
 
-
-    return 0;
+return 0;
 }
